@@ -9,7 +9,6 @@ namespace H1_Diablo
     class Weapon
     {
         private WeaponType weaponType;
-
         public WeaponType WeaponType
         {
             get { return weaponType; }
