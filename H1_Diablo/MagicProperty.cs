@@ -5,6 +5,14 @@ namespace H1_Diablo
 {
     public class MagicProperty
     {
+        private bool enchantExists;
+
+        public bool EnchantExists
+        {
+            get { return enchantExists; }
+            set { enchantExists = value; }
+        }
+
         private string enchantName;
 
         public string EnchantName
@@ -20,32 +28,32 @@ namespace H1_Diablo
 
         public Weapon AddRndEnchant(Weapon wep)
         {
-            byte chance = (byte)new Random().Next(0, 100);
+            byte chance = (byte)new Random(Guid.NewGuid().GetHashCode()).Next(0, 100);
 
-            if (chance < 55)
+            if (chance < 10)
+            {
+                wep = AddDamage(wep);
+            }
+            else if (chance < 20)
+            {
+                AddAtkSpeed(wep);
+            }
+            else if (chance < 30)
+            {
+                wep = AddLightningDmg(wep);
+            }
+            else if (chance < 50)
+            {
+                wep = AddFireDmg(wep);
+            }
+            else
             {
                 wep = AddIceDmg(wep);
-                if (chance < 50)
-                {
-                    wep = AddFireDmg(wep);
-                    if (chance < 30)
-                    {
-                        wep = AddLightningDmg(wep);
-                        if (chance < 20)
-                        {
-                            AddAtkSpeed(wep);
-                            if (chance < 10)
-                            {
-                                wep = AddDamage(wep);
-                            }
-                        }
-                    }
-                }
             }
             return wep;
         }
 
-        public Weapon AddFireDmg(Weapon wep)
+        private Weapon AddFireDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
             {
@@ -53,10 +61,15 @@ namespace H1_Diablo
                 {
                     wep.Damages[i].MinDamage += 30;
                     wep.Damages[i].MaxDamage += 60;
+                    EnchantExists = true;
                     break;
                 }
             }
-            wep.Damages.Add(new FireDamage(10, 60));
+            if (!EnchantExists)
+            {
+                wep.Damages.Add(new FireDamage(30, 60));
+            }
+
             EnchantName = "FireDamage";
             return wep;
         }
@@ -65,13 +78,18 @@ namespace H1_Diablo
         {
             for (int i = 0; i < wep.Damages.Count; i++)
             {
-                if (wep.Damages[i].GetType().Name == "IceDamage")
+                if (wep.Damages[i] is IceDamage)
                 {
                     wep.Damages[i].MinDamage += 20;
                     wep.Damages[i].MaxDamage += 40;
+                    EnchantExists = true;
+                    break;
                 }
             }
-            wep.Damages.Add(new IceDamage(20, 40));
+            if (!EnchantExists)
+            {
+                wep.Damages.Add(new IceDamage(20, 40));
+            }
             EnchantName = "IceDamage";
             return wep;
         }
@@ -84,9 +102,14 @@ namespace H1_Diablo
                 {
                     wep.Damages[i].MinDamage += 10;
                     wep.Damages[i].MaxDamage += 100;
+                    EnchantExists = true;
+                    break;
                 }
             }
-            wep.Damages.Add(new LightningDamage(10, 100));
+            if (!EnchantExists)
+            {
+                wep.Damages.Add(new LightningDamage(10, 100));
+            }
             EnchantName = "LightningDamage";
             return wep;
         }
@@ -99,9 +122,14 @@ namespace H1_Diablo
                 {
                     wep.Damages[i].MinDamage += 25;
                     wep.Damages[i].MaxDamage += 50;
+                    EnchantExists = true;
+                    break;
                 }
             }
-            wep.Damages.Add(new PhysicalDamage(25, 50));
+            if (!EnchantExists)
+            {
+                wep.Damages.Add(new PhysicalDamage(25, 50));
+            }
             EnchantName = "PhysicalDamage";
             return wep;
         }
@@ -122,9 +150,15 @@ namespace H1_Diablo
                 {
                     wep.Damages[i].MinDamage += 10;
                     wep.Damages[i].MaxDamage += 60;
+                    EnchantExists = true;
+                    break;
                 }
             }
-            wep.Damages.Add(new RangedDamage(10, 60));
+            if (!EnchantExists)
+            {
+                wep.Damages.Add(new RangedDamage(10, 60));
+
+            }
             EnchantName = "RangedAtk";
             return wep;
         }

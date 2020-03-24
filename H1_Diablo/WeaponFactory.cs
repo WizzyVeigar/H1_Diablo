@@ -57,7 +57,6 @@ namespace H1_Diablo
         public Weapon CreateWeapon()
         {
             Weapon baseWeapon = GetRndWeapon();
-            baseWeapon.ReqLevel = new Random().Next(1, 60);
             return baseWeapon;
         }
         /// <summary>
@@ -129,7 +128,7 @@ namespace H1_Diablo
                 default:
                     return null;
             }
-
+            weapon.ReqLevel = new Random().Next(1, 60);
             return CreateWeaponStats(weapon);
         }
         /// <summary>
@@ -176,127 +175,147 @@ namespace H1_Diablo
                     weapon.Damages.Add(new RangedDamage(statWeight * weapon.ReqLevel / 2, statWeight * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.4f;
                     weapon.WeaponRange = 300;
+                    weapon.Name = "Bow";
                     break;
                 case WeaponType.CROSSBOW:
                     statWeight += 2;
                     weapon.Damages.Add(new RangedDamage(statWeight * weapon.ReqLevel, (statWeight + 3) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.7f;
                     weapon.WeaponRange = 300;
+                    weapon.Name = "Crossbow";
                     break;
                 case WeaponType.MAGESTAFF:
                     statWeight += 1;
                     weapon.Damages.Add(new FireDamage(statWeight * weapon.ReqLevel, (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.3f;
                     weapon.WeaponRange = 200;
+                    weapon.Name = "Mage Staff";
                     break;
                 case WeaponType.HANDCROSSBOW:
                     weapon.Damages.Add(new RangedDamage(statWeight * weapon.ReqLevel, (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 0.9f;
                     weapon.WeaponRange = 250;
+                    weapon.Name = "HandCrossBow";
                     break;
                 case WeaponType.WAND:
                     statWeight += 2;
                     weapon.Damages.Add(new IceDamage(statWeight * weapon.ReqLevel, (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 150;
+                    weapon.Name = "Wand of Wizardry";
                     break;
                 case WeaponType.CEREMONIALKNIFE:
                     statWeight += 1;
                     weapon.Damages.Add(new PhysicalDamage(statWeight * weapon.ReqLevel, (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.4f;
                     weapon.WeaponRange = 30;
+                    weapon.Name = "Ceremonial Knife";
                     break;
                 case WeaponType.DAGGER:
                     statWeight += 1;
                     weapon.Damages.Add(new PhysicalDamage(statWeight * weapon.ReqLevel, (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.4f;
                     weapon.WeaponRange = 30;
+                    weapon.Name = "Dagger";
                     break;
                 case WeaponType.MACE:
                     statWeight += 2;
                     weapon.Damages.Add(new PhysicalDamage(statWeight * weapon.ReqLevel, (statWeight + 2) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 50;
+                    weapon.Name = "Mace";
                     break;
                 case WeaponType.SCYTHE1H:
                     statWeight += 5;
                     weapon.Damages.Add(new PhysicalDamage((statWeight + statWeight / 2) * weapon.ReqLevel, (statWeight + statWeight / 2 + 3) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.1f;
                     weapon.WeaponRange = 85;
+                    weapon.Name = "One Handed Scythe";
                     break;
                 case WeaponType.SCYTHE2H:
                     statWeight += 10;
                     weapon.Damages.Add(new PhysicalDamage((statWeight + statWeight / 2) * weapon.ReqLevel, (statWeight + statWeight / 2 + 3) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 100;
+                    weapon.Name = "Two Handed Scythe";
                     break;
                 case WeaponType.AXE:
                     statWeight += 7;
                     weapon.Damages.Add(new PhysicalDamage((statWeight + statWeight / 2) * weapon.ReqLevel, (statWeight + statWeight / 2 + 3) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1f;
                     weapon.WeaponRange = 60;
+                    weapon.Name = "Two Handed Axe";
                     break;
                 case WeaponType.POLEARM:
                     statWeight += 2;
                     weapon.Damages.Add(new PhysicalDamage((statWeight * weapon.ReqLevel), (statWeight + 1) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 110;
+                    weapon.Name = "Polearm";
                     break;
                 case WeaponType.SWORD1H:
                     statWeight += 1;
                     weapon.Damages.Add(new PhysicalDamage((statWeight * weapon.ReqLevel), (statWeight + 2) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.4f;
                     weapon.WeaponRange = 50;
+                    weapon.Name = "One Handed Sword";
                     break;
                 case WeaponType.SWORD2H:
                     statWeight += 5;
                     weapon.Damages.Add(new PhysicalDamage((statWeight + statWeight / 2) * weapon.ReqLevel, (statWeight + statWeight / 2 + 3) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.1f;
                     weapon.WeaponRange = 75;
+                    weapon.Name = "Two Handed Sword";
                     break;
                 case WeaponType.STAFF:
                     statWeight += 2;
                     weapon.Damages.Add(new PhysicalDamage(statWeight * weapon.ReqLevel, (statWeight + 2) * weapon.ReqLevel));
                     weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 110;
+                    weapon.Name = "Staff";
                     break;
                 default:
                     break;
             }
 
-            //weapon.MagicProperties = GetMagicProperties(weapon);
+            weapon.MagicProperties = GetMagicProperties(weapon);
             return weapon;
         }
 
-        //private MagicProperty[] GetMagicProperties(Weapon weapon)
-        //{
-        //    switch (weapon.Rarity)
-        //    {
-        //        case Rarity.COMMON:
-        //            break;
-        //        case Rarity.MAGIC:
-        //            weapon.MagicProperties = new MagicProperty[new Random().Next(2, 4)];
-        //            break;
-        //        case Rarity.RARE:
-        //            weapon.MagicProperties = new MagicProperty[new Random().Next(3, 5)];
-        //                    break;
-        //                case Rarity.LEGENDARY:
-        //                    weapon.MagicProperties = new MagicProperty[6];
-        //                    break;
-        //                default:
-        //                    break;
-        //            }
+        private MagicProperty[] GetMagicProperties(Weapon weapon)
+        {
+            switch (weapon.Rarity)
+            {
+                case Rarity.COMMON:
+                    break;
+                case Rarity.MAGIC:
+                    weapon.MagicProperties = new MagicProperty[new Random().Next(2, 4)];
+                    break;
+                case Rarity.RARE:
+                    weapon.MagicProperties = new MagicProperty[new Random().Next(3, 5)];
+                    break;
+                case Rarity.LEGENDARY:
+                    weapon.MagicProperties = new MagicProperty[6];
+                    break;
+                default:
+                    break;
+            }
+            if (weapon.MagicProperties != null)
+            {
+                weapon.MagicProperties = RollEnchantments(weapon);
+                return weapon.MagicProperties;
+            }
+            return null;
+        }
 
-        //    weapon = RollEnchantments(weapon);
-        //}
-
-        //private Weapon RollEnchantments(Weapon weapon)
-        //{
-        //    for (int i = 0; i < weapon.MagicProperties.Length; i++)
-        //    {
-        //        weapon.MagicProperties[i].AddRndEnchant(weapon);
-        //    }
-        //}
+        private MagicProperty[] RollEnchantments(Weapon weapon)
+        {
+            for (int i = 0; i < weapon.MagicProperties.Length; i++)
+            {
+                weapon.MagicProperties[i] = new MagicProperty(weapon);
+            }
+            return weapon.MagicProperties;
+        }
 
         /// <summary>
         /// Creates a random weapon

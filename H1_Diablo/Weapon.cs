@@ -83,19 +83,50 @@ namespace H1_Diablo
 
         public string CalculateDPS()
         {
-            int totalDmg = 0;
+            float totalDmg = 0;
             string str = string.Empty;
-            foreach (Damage dmgtype in Damages)
-            {
-                totalDmg += dmgtype.MinDamage + dmgtype.MaxDamage;
-                str.Insert(0, dmgtype.GetType().Name + ":     " + dmgtype.MinDamage +"--"+ dmgtype.MaxDamage);
-            }
 
+            if (Damages.Count != 0)
+            {
+                foreach (Damage dmgtype in Damages)
+                {
+                    totalDmg += dmgtype.MinDamage + dmgtype.MaxDamage;
+                    str = str.Insert(0, dmgtype.GetType().Name + ":     " + dmgtype.MinDamage + "-" + dmgtype.MaxDamage + "\n");
+                }
+            }
             if (AtkSpeed == 1)
             {
                 return str + (totalDmg / Damages.Count) + " Damage per second";
             }
-            return str + totalDmg / AtkSpeed + " Damage per second";
+            return str + (float)Math.Round(totalDmg / AtkSpeed * 100f) / 100f + " Damage per second";
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            switch (Rarity)
+            {
+                case Rarity.COMMON:
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    builder.Append("Common" + " " + Name);
+                    break;
+                case Rarity.MAGIC:
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    builder.Append("Magic" + " " + Name);
+                    break;
+                case Rarity.RARE:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    builder.Append("Rare" + " " + Name);
+                    break;
+                case Rarity.LEGENDARY:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    builder.Append("LEGENDARY" + " " + Name);
+                    break;
+                default:
+                    break;
+            }
+            builder.Append(" Level: " + ReqLevel);
+            return builder.ToString();
         }
     }
 }
