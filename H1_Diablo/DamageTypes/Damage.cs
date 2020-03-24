@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H1_Diablo
 {
-    abstract class Damage
+    public abstract class Damage
     {
         private int minDamage;
 
@@ -16,7 +16,6 @@ namespace H1_Diablo
             set { minDamage = value; }
         }
         private int maxDamage;
-
 
         public int MaxDamage
         {

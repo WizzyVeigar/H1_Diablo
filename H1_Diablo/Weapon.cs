@@ -20,13 +20,17 @@ namespace H1_Diablo
             WeaponType = weaponType;
         }
 
-        public Weapon(WeaponType weaponType, int reqLevel): this(weaponType)
+        public Weapon(WeaponType weaponType, int reqLevel) : this(weaponType)
         {
             ReqLevel = reqLevel;
         }
+        private List<Damage> damages = new List<Damage>();
 
-
-                    Dictionary<Damage, int> allDamage = new Dictionary<Damage, int>();
+        public List<Damage> Damages
+        {
+            get { return damages; }
+            set { damages = value; }
+        }
 
         private string name;
 
@@ -79,11 +83,19 @@ namespace H1_Diablo
 
         public string CalculateDPS()
         {
-            if(AtkSpeed == 1)
+            int totalDmg = 0;
+            string str = string.Empty;
+            foreach (Damage dmgtype in Damages)
             {
-                return (MaxDamage - MinDamage) + MinDamage + " Damage per second";
+                totalDmg += dmgtype.MinDamage + dmgtype.MaxDamage;
+                str.Insert(0, dmgtype.GetType().Name + ":     " + dmgtype.MinDamage +"--"+ dmgtype.MaxDamage);
             }
-            return (MinDamage + MaxDamage) / AtkSpeed + " Damage per second";
+
+            if (AtkSpeed == 1)
+            {
+                return str + (totalDmg / Damages.Count) + " Damage per second";
+            }
+            return str + totalDmg / AtkSpeed + " Damage per second";
         }
     }
 }
