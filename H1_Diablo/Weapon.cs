@@ -96,7 +96,7 @@ namespace H1_Diablo
             }
             if (AtkSpeed == 1)
             {
-                return str + (totalDmg / Damages.Count) + " Damage per second";
+                return str + (float)Math.Round((totalDmg / Damages.Count) * 100f) / 100f + " Damage per second";
             }
             return str + (float)Math.Round(totalDmg / AtkSpeed * 100f) / 100f + " Damage per second";
         }
