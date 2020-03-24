@@ -8,21 +8,21 @@ namespace H1_Diablo
 {
     public enum WeaponType
     {
-        BOW,
-        CROSSBOW,
-        MAGESTAFF,
-        HANDCROSSBOW,
-        WAND,
-        CEREMONIALKNIFE,
+        AXE,
         DAGGER,
         MACE,
-        SCYTHE1H,
         SWORD1H,
-        AXE,
-        SCYTHE2H,
-        POLEARM,
         SWORD2H,
-        STAFF
+        CEREMONIALKNIFE,
+        WAND,
+        HANDCROSSBOW,
+        CROSSBOW,
+        BOW,
+        POLEARM,
+        SCYTHE1H,
+        SCYTHE2H,
+        STAFF,
+        MAGESTAFF
     }
     public enum Rarity
     {
@@ -144,7 +144,7 @@ namespace H1_Diablo
             return baseWeapon;
         }
 
-        public Weapon CreateWeaponStats(Weapon weapon)
+        private Weapon CreateWeaponStats(Weapon weapon)
         {
             weapon.Rarity = GetRarity();
             //Used for calculations on weapons. Increases on rarity and weapon type
@@ -281,7 +281,11 @@ namespace H1_Diablo
             weapon.MagicProperties = GetMagicProperties(weapon);
             return weapon;
         }
-
+        /// <summary>
+        /// Sets the size of <see cref="Weapon.MagicProperties"/> depending on <see cref="Weapon.Rarity"/>
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
         private MagicProperty[] GetMagicProperties(Weapon weapon)
         {
             switch (weapon.Rarity)
@@ -307,7 +311,11 @@ namespace H1_Diablo
             }
             return null;
         }
-
+        /// <summary>
+        /// Creates <see cref="MagicProperty"/> for each open slot
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
         private MagicProperty[] RollEnchantments(Weapon weapon)
         {
             for (int i = 0; i < weapon.MagicProperties.Length; i++)
@@ -321,23 +329,14 @@ namespace H1_Diablo
         /// Creates a random weapon
         /// </summary>
         /// <returns></returns>
-        public Weapon GetRndWeapon()
+        private Weapon GetRndWeapon()
         {
             return CreateWeapon((WeaponType)new Random(Guid.NewGuid().GetHashCode()).Next(0, Enum.GetNames(typeof(WeaponType)).Length));
         }
 
-        public Rarity GetRarity()
+        private Rarity GetRarity()
         {
             return ((Rarity)new Random(Guid.NewGuid().GetHashCode()).Next(0, Enum.GetNames(typeof(Rarity)).Length));
-        }
-        /// <summary>
-        /// Give a weapon a specific rarity
-        /// </summary>
-        /// <param name="rarity"></param>
-        /// <returns></returns>
-        public Rarity GetRarity(Rarity rarity)
-        {
-            return rarity;
         }
     }
 }

@@ -25,8 +25,12 @@ namespace H1_Diablo
         {
             AddRndEnchant(weaponToEnchant);
         }
-
-        public Weapon AddRndEnchant(Weapon wep)
+        /// <summary>
+        /// Adds a random enchantment
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
+        private Weapon AddRndEnchant(Weapon wep)
         {
             byte chance = (byte)new Random(Guid.NewGuid().GetHashCode()).Next(0, 100);
 
@@ -52,7 +56,11 @@ namespace H1_Diablo
             }
             return wep;
         }
-
+        /// <summary>
+        /// Adds a firedamage enchant to <paramref name="wep"/>
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddFireDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
@@ -73,7 +81,11 @@ namespace H1_Diablo
             EnchantName = "FireDamage";
             return wep;
         }
-
+        /// <summary>
+        /// Adds a icedamage enchant to <paramref name="wep"/>
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddIceDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
@@ -93,7 +105,11 @@ namespace H1_Diablo
             EnchantName = "IceDamage";
             return wep;
         }
-
+        /// <summary>
+        /// Adds a lightningdamage enchant to <paramref name="wep"/>
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddLightningDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
@@ -113,7 +129,11 @@ namespace H1_Diablo
             EnchantName = "LightningDamage";
             return wep;
         }
-
+        /// <summary>
+        /// Adds a physicaldamage enchant to <paramref name="wep"/>
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddPhysicalDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
@@ -133,15 +153,22 @@ namespace H1_Diablo
             EnchantName = "PhysicalDamage";
             return wep;
         }
-
+        /// <summary>
+        /// Gives the <paramref name="wep"/> more attack speed (Less time between attacks)
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddAtkSpeed(Weapon wep)
         {
             wep.AtkSpeed -= 0.2f;
             EnchantName = "AttackSpeed";
             return wep;
         }
-
-
+        /// <summary>
+        /// Adds rangeddamage enchant to the <paramref name="wep"/>
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddRangedDmg(Weapon wep)
         {
             for (int i = 0; i < wep.Damages.Count; i++)
@@ -162,7 +189,11 @@ namespace H1_Diablo
             EnchantName = "RangedAtk";
             return wep;
         }
-
+        /// <summary>
+        /// Checks for <see cref="WeaponType"/> and adds the appropriate damage enchant
+        /// </summary>
+        /// <param name="wep"></param>
+        /// <returns></returns>
         private Weapon AddDamage(Weapon wep)
         {
             if (wep.WeaponType == WeaponType.BOW || wep.WeaponType == WeaponType.CROSSBOW || wep.WeaponType == WeaponType.HANDCROSSBOW || wep.WeaponType == WeaponType.WAND || wep.WeaponType == WeaponType.MAGESTAFF)

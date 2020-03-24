@@ -23,7 +23,7 @@ namespace H1_Diablo
             set { maxDamage = value; }
         }
 
-        public Damage(int minDamage, int maxDamage)
+        protected Damage(int minDamage, int maxDamage)
         {
             MinDamage = minDamage;
             MaxDamage = maxDamage;
