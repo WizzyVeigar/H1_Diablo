@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H1_Diablo
 {
-    class Weapon
+    public class Weapon
     {
         private WeaponType weaponType;
         public WeaponType WeaponType
@@ -20,10 +20,13 @@ namespace H1_Diablo
             WeaponType = weaponType;
         }
 
-        public Weapon(WeaponType weaponType, int reqLevel) : this(weaponType)
+        public Weapon(WeaponType weaponType, int reqLevel): this(weaponType)
         {
             ReqLevel = reqLevel;
         }
+
+
+                    Dictionary<Damage, int> allDamage = new Dictionary<Damage, int>();
 
         private string name;
 
@@ -55,21 +58,7 @@ namespace H1_Diablo
             get { return weaponRange; }
             set { weaponRange = value; }
         }
-        private int minDamage;
 
-        public int MinDamage
-        {
-            get { return minDamage; }
-            set { minDamage = value; }
-        }
-
-        private int maxDamage;
-
-        public int MaxDamage
-        {
-            get { return maxDamage; }
-            set { maxDamage = value; }
-        }
 
         private float atkSpeed;
 

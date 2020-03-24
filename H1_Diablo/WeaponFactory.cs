@@ -129,6 +129,7 @@ namespace H1_Diablo
                 default:
                     return null;
             }
+            weapon = CreateWeaponStats(weapon);
             return weapon;
         }
         /// <summary>
@@ -144,11 +145,14 @@ namespace H1_Diablo
             return baseWeapon;
         }
 
-        private Weapon CreateWeaponStats(Weapon weapon)
+        public Weapon CreateWeaponStats(Weapon weapon)
         {
+            weapon.Rarity = GetRarity();
+            //!Make method for generating level
+            weapon.MagicProperties = GetMagicProperties(weapon);
+
             //Used for calculations on weapons. Increases on rarity and weapon type
             int statWeight = 1;
-
             //Gives a bonus to statWeight depending on rarity
             switch (weapon.Rarity)
             {
@@ -157,6 +161,7 @@ namespace H1_Diablo
                     break;
                 case Rarity.MAGIC:
                     statWeight += 2;
+                    
                     break;
                 case Rarity.RARE:
                     statWeight += 3;
@@ -167,36 +172,77 @@ namespace H1_Diablo
                 default:
                     break;
             }
+
             switch (weapon.WeaponType)
             {
                 case WeaponType.BOW:
                     statWeight += 2;
-                    weapon.AtkSpeed = new Random().Next(statWeight, statWeight + 10);
-                    weapon.MinDamage = (int)CalculateStat(statWeight, weapon.ReqLevel);
-                    weapon.MaxDamage = (int)CalculateStat(statWeight + weapon.ReqLevel / 2, weapon.ReqLevel);
+                    weapon.MinDamage = statWeight * weapon.ReqLevel / 2;
+                    weapon.MaxDamage = statWeight * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.4f;
+                    weapon.WeaponRange = 300;
                     break;
                 case WeaponType.CROSSBOW:
+                    statWeight += 2;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 3) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.7f;
+                    weapon.WeaponRange = 300;
                     break;
                 case WeaponType.MAGESTAFF:
-                    break;
-                case WeaponType.HANDCROSSBOW:
-                    break;
-                case WeaponType.WAND:
-                    break;
-                case WeaponType.CEREMONIALKNIFE:
-                    break;
-                case WeaponType.DAGGER:
-                    break;
-                case WeaponType.MACE:
-                    break;
-                case WeaponType.SCYTHE1H:
-                    break;
-                case WeaponType.SWORD1H:
                     statWeight += 1;
                     weapon.MinDamage = (statWeight * weapon.ReqLevel);
-                    weapon.MaxDamage = (statWeight + 2) * weapon.ReqLevel;
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.3f;
+                    weapon.WeaponRange = 200;
+                    break;
+                case WeaponType.HANDCROSSBOW:                   
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 0.9f;
+                    weapon.WeaponRange = 250;
+                    break;
+                case WeaponType.WAND:
+                    statWeight += 2;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.2f;
+                    weapon.WeaponRange = 150;
+                    break;
+                case WeaponType.CEREMONIALKNIFE:
+                    statWeight += 1;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
                     weapon.AtkSpeed = 1.4f;
+                    weapon.WeaponRange = 30;
+                    break;
+                case WeaponType.DAGGER:
+                    statWeight += 1;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.4f;
+                    weapon.WeaponRange = 30;
+                    break;
+                case WeaponType.MACE:
+                    statWeight += 2;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 2) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.2f;
                     weapon.WeaponRange = 50;
+                    break;
+                case WeaponType.SCYTHE1H:
+                    statWeight += 5;
+                    weapon.MinDamage = (statWeight + statWeight / 2) * weapon.ReqLevel;
+                    weapon.MaxDamage = (statWeight + statWeight / 2 + 3) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.1f;
+                    weapon.WeaponRange = 85;
+                    break;
+                case WeaponType.SCYTHE2H:
+                    statWeight += 10;
+                    weapon.MinDamage = (statWeight + statWeight / 2) * weapon.ReqLevel;
+                    weapon.MaxDamage = (statWeight + statWeight / 2 + 3) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.2f;
+                    weapon.WeaponRange = 100;
                     break;
                 case WeaponType.AXE:
                     statWeight += 7;
@@ -205,9 +251,19 @@ namespace H1_Diablo
                     weapon.AtkSpeed = 1f;
                     weapon.WeaponRange = 60;
                     break;
-                case WeaponType.SCYTHE2H:
-                    break;
                 case WeaponType.POLEARM:
+                    statWeight += 2;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 1) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.2f;
+                    weapon.WeaponRange = 110;
+                    break;
+                case WeaponType.SWORD1H:
+                    statWeight += 1;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 2) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.4f;
+                    weapon.WeaponRange = 50;
                     break;
                 case WeaponType.SWORD2H:
                     statWeight += 5;
@@ -217,12 +273,47 @@ namespace H1_Diablo
                     weapon.WeaponRange = 75;
                     break;
                 case WeaponType.STAFF:
+                    statWeight += 2;
+                    weapon.MinDamage = (statWeight * weapon.ReqLevel);
+                    weapon.MaxDamage = (statWeight + 2) * weapon.ReqLevel;
+                    weapon.AtkSpeed = 1.2f;
+                    weapon.WeaponRange = 110;
+                    break;
+                default:
+                    break;
+            }
+            
+            return weapon;
+        }
+
+        private MagicProperty[] GetMagicProperties(Weapon weapon)
+        {
+            switch (weapon.Rarity)
+            {
+                case Rarity.COMMON:
+                    break;
+                case Rarity.MAGIC:
+                    weapon.MagicProperties = new MagicProperty[new Random().Next(2, 4)];
+                    break;
+                case Rarity.RARE:
+                    weapon.MagicProperties = new MagicProperty[new Random().Next(3, 5)];
+                    break;
+                case Rarity.LEGENDARY:
+                    weapon.MagicProperties = new MagicProperty[6];
                     break;
                 default:
                     break;
             }
 
-            return weapon;
+            weapon = RollEnchantments(weapon);
+        }
+
+        private Weapon RollEnchantments(Weapon weapon)
+        {
+            for (int i = 0; i < weapon.MagicProperties.Length; i++)
+            {
+                weapon.MagicProperties[i]
+            }
         }
 
         /// <summary>
@@ -233,10 +324,19 @@ namespace H1_Diablo
         {
             return CreateWeapon((WeaponType)new Random(Guid.NewGuid().GetHashCode()).Next(0, Enum.GetNames(typeof(WeaponType)).Length));
         }
-
-        public float CalculateStat(int statWeight, int reqLevel)
+        
+        public Rarity GetRarity()
         {
-
+            return ((Rarity)new Random(Guid.NewGuid().GetHashCode()).Next(0, Enum.GetNames(typeof(Rarity)).Length));
+        }
+        /// <summary>
+        /// Give a weapon a specific rarity
+        /// </summary>
+        /// <param name="rarity"></param>
+        /// <returns></returns>
+        public Rarity GetRarity(Rarity rarity)
+        {
+            return rarity;
         }
     }
 }

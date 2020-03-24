@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DamageTypes\Damage.cs" />
+    <Compile Include="DamageTypes\FireDamage.cs" />
+    <Compile Include="DamageTypes\IceDamage.cs" />
+    <Compile Include="DamageTypes\LightningDamage.cs" />
+    <Compile Include="DamageTypes\PhysicalDamage.cs" />
+    <Compile Include="DamageTypes\RangedDamage.cs" />
     <Compile Include="Weapons\CeremonialKnife.cs" />
     <Compile Include="Weapons\Dagger.cs" />
     <Compile Include="Weapons\HandCrossbow.cs" />

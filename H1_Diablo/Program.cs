@@ -10,8 +10,10 @@ namespace H1_Diablo
     {
         static void Main(string[] args)
         {
-            Weapon weapon = new Weapon(WeaponType.SCYTHE2H);
-            Console.WriteLine(weapon.WeaponType);
+            Weapon weapon = WeaponFactory.Instance.CreateWeapon(WeaponType.SCYTHE2H);
+            //Weapon weapo = WeaponFactory.Instance.CreateWeapon(5, WeaponType.SWORD2H);
+            Console.WriteLine(weapon.WeaponType +"\n"+ weapon.Rarity.ToString() +"\n"+ weapon.ReqLevel);
+            //Console.WriteLine(weapo.WeaponType +"\n"+ weapo.Rarity.ToString() +"\n"+ weapo.ReqLevel);
             Console.ReadLine();
         }
     }
